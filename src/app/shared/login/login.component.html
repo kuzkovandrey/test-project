@@ -1,0 +1,43 @@
+<form
+  class="form"
+  [formGroup]="loginForm"
+  (ngSubmit)="login()"
+>
+
+  <label [class.warning-message]="isInvalidUsername">
+    Username
+    <ng-container *ngIf="isInvalidUsername">
+      must be more than 4 characters
+    </ng-container>
+  </label>
+
+  <input
+    class="form__input"
+    placeholder="John123qwerty"
+    type="text"
+    formControlName="username"
+  >
+
+  <label [class.warning-message]="isInvalidPassword">
+    Password
+    <ng-container *ngIf="isInvalidPassword">
+      must be more than 6 characters
+    </ng-container>
+  </label>
+
+  <input
+    class="form__input"
+    placeholder="**********"
+    type="password"
+    formControlName="password"
+  >
+
+  <button
+    class="form__submit"
+    type="submit"
+    [disabled]="loginForm.invalid"
+    [class.form__submit--disabled]="loginForm.invalid"
+  >
+    Log in
+  </button>
+</form>

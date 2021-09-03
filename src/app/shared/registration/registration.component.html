@@ -1,0 +1,71 @@
+<form
+  class="form"
+  [formGroup]="registrationForm"
+  (ngSubmit)="registration()"
+>
+
+  <label [class.warning-message]="isInvalidUsername">
+    Username
+    <ng-container *ngIf="isInvalidUsername">
+      must be more than 4 characters
+    </ng-container>
+  </label>
+
+  <input
+    class="form__input"
+    placeholder="John123qwerty"
+    type="text"
+    formControlName="username"
+  >
+
+  <label [class.warning-message]="isInvalidPassword">
+    Password
+    <ng-container *ngIf="isInvalidPassword">
+      must be more than 6 characters
+    </ng-container>
+  </label>
+
+  <input
+    class="form__input"
+    placeholder="**********"
+    type="password"
+    formControlName="password"
+  >
+
+  <label [class.warning-message]="isInvalidFirstName">
+    First name
+    <ng-container *ngIf="isInvalidFirstName">
+      must be more than 4 characters
+    </ng-container>
+  </label>
+  <input
+    class="form__input"
+    placeholder="John"
+    type="text"
+    formControlName="firstName"
+  >
+
+  <label [class.warning-message]="isInvalidLastName">
+    Last name
+    <ng-container *ngIf="isInvalidLastName">
+      must be more than 4 characters
+    </ng-container>
+  </label>
+
+  <input
+    class="form__input"
+    placeholder="Doe"
+    type="text"
+    formControlName="lastName"
+  >
+
+  <button
+    class="form__submit"
+    type="submit"
+    [disabled]="registrationForm.invalid"
+    [class.form__submit--disabled]="registrationForm.invalid"
+  >
+    Registration
+  </button>
+
+</form>

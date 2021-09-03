@@ -1,0 +1,36 @@
+<div class="authorization-page">
+
+  <section class="auth">
+
+    <nav class="navigation">
+      <ul>
+        <li>
+          <a
+            class="navigation__link"
+            [routerLink]="['registration']"
+            [routerLinkActive]="'navigation__link--active'"
+          >
+            Registration
+          </a>
+        </li>
+
+        <li>
+          <a
+            class="navigation__link"
+            [routerLink]="['login']"
+            [routerLinkActive]="'navigation__link--active'"
+          >
+            Login
+          </a>
+        </li>
+
+      </ul>
+    </nav>
+
+    <router-outlet></router-outlet>
+
+  </section>
+</div>
+
+
+
