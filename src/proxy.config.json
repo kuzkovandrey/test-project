@@ -1,0 +1,7 @@
+{
+  "/api": {
+    "target": "http://react-test.somee.com/",
+    "secure": false,
+    "changeOrigin": true
+  }
+}
