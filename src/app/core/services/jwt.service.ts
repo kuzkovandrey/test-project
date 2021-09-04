@@ -1,10 +1,14 @@
 import {Injectable} from "@angular/core";
 import {BehaviorSubject, Subject} from "rxjs";
+import {RefreshTokenService} from "./refresh-token.service";
+import {AuthResponse} from "../models/auth-response.model";
 
 @Injectable()
 export class JwtService {
 
   killToken: Subject<boolean> = new Subject<boolean>()
+
+  constructor(private refreshTokenService: RefreshTokenService) {}
 
   getAccessToken(): string {
     return window.localStorage['jwtAccessToken']
@@ -16,7 +20,7 @@ export class JwtService {
 
   destroyAccessToken(): void {
     window.localStorage.removeItem('jwtAccessToken');
-    this.killToken.next(true)
+    //this.killToken.next(true)
   }
 
   getRefreshToken(): string {
@@ -31,12 +35,29 @@ export class JwtService {
     window.localStorage.removeItem('jwtRefreshToken');
   }
 
+  refreshToken() {
+    const refToken = this.getRefreshToken()
+
+    this.refreshTokenService.refresh(refToken).subscribe(
+      (newToken:AuthResponse) => {
+        this.saveAccessToken(newToken.tokens.acessToken)
+        this.saveRefreshToken(newToken.tokens.refreshToken)
+        this.setTimeLifeToken(newToken.tokens.exparedAt)
+      },
+      error => {
+        console.log('Error refresh token')
+      }
+    )
+  }
+
   setTimeLifeToken(time: number) {
     console.log('start TimeLifeToken')
 
     setTimeout(() => {
 
       this.destroyAccessToken()
+      this.refreshToken()
+
     }, time * 1000)
   }
 }

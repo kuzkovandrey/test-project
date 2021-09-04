@@ -14,16 +14,25 @@ export class HttpTokenInterceptor implements HttpInterceptor{
     const headersConfig = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      'Authorization': ''
+      'Authorization': '',
+      'refreshToken': ''
     };
 
     const token = this.jwtService.getAccessToken();
 
     if (token) {
-      headersConfig['Authorization'] = `${token}`
+      headersConfig['Authorization'] = token;
     }
 
     const request = req.clone({setHeaders: headersConfig});
+
+    if (req.url === 'api/refresh') {
+      const refToken = this.jwtService.getRefreshToken()
+
+      const request = req.clone({setParams: {refreshToken: refToken}});
+
+      return next.handle(request)
+    }
 
     return next.handle(request);
   }
