@@ -71,7 +71,6 @@ export class RegistrationComponent implements OnInit, DoCheck{
 
   submit() {
     this.registration(this.registrationForm.value)
-    this.submitButton.nativeElement.disabled = true
   }
 
   registration(user: User) {
@@ -84,6 +83,8 @@ export class RegistrationComponent implements OnInit, DoCheck{
         console.log('reg error: registrationComponent', error)
 
         this.errorMessage = error.error.message
+
+        if (error.status === 500 || error.status === 0) this.errorMessage = `Disconnected internet.. Error status ${error.status}`
 
         setTimeout(() => this.errorMessage = '',3000)
       }

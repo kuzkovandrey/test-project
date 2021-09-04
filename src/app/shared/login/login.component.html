@@ -50,3 +50,7 @@
 <p *ngIf="errorMessage" class="message message--error">
   {{ errorMessage }}. Try again
 </p>
+
+<p *ngIf="isUnAuthorized" class="message message--error">
+  The session is over. Log in, please
+</p>

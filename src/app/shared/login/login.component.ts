@@ -1,11 +1,11 @@
-import {Component, DoCheck, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, DoCheck, OnInit} from '@angular/core';
 import {FormGroup, FormControl, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {User} from "../../core/models/user.model";
 import {AuthService} from "../../core/services/auth.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {JwtService} from "../../core/services/jwt.service";
-import {forkJoin} from "rxjs";
+import {delay} from "rxjs/operators";
 
 @Component({
   selector: 'app-login',
@@ -17,15 +17,14 @@ import {forkJoin} from "rxjs";
 })
 export class LoginComponent implements OnInit, DoCheck{
 
-  @ViewChild('submitButton') submitButton!: ElementRef
-
   loginForm!: FormGroup
-
   isInvalidUsername = false
   isInvalidPassword = false
 
   errorMessage = ''
+
   isAllowedAccess = false
+  isUnAuthorized = false
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -48,11 +47,14 @@ export class LoginComponent implements OnInit, DoCheck{
 
     this.isAllowedAccess = this.route.snapshot.params?.access
 
+    this.isUnAuthorized = !!(this.route.snapshot.queryParams.unAuth)
+
     if(this.isAllowedAccess) {
       setTimeout(() => {
         this.isAllowedAccess = false
       }, 3000)
     }
+
   }
 
   ngDoCheck(): void {
@@ -67,15 +69,13 @@ export class LoginComponent implements OnInit, DoCheck{
 
   submit() {
     this.login(this.loginForm.value)
-
-    this.submitButton.nativeElement.disabled = true
   }
 
   login(user: User) {
 
     this.jwt.refreshToken()
 
-    this.auth.login(user).subscribe(
+    this.auth.login(user).pipe(delay(100)).subscribe(
       data => {
         console.log(data)
         this.router.navigate(['about-user'])

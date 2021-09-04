@@ -1,12 +1,14 @@
 import {Injectable} from "@angular/core";
 import {RefreshTokenService} from "./refresh-token.service";
 import {AuthResponse} from "../models/auth-response.model";
-import {Subject} from "rxjs";
+import {Subject, Subscription} from "rxjs";
 
 @Injectable()
 export class JwtService {
 
   isDestroyedAccessToken: Subject<boolean> = new Subject<boolean>()
+
+  subTimer?: Subscription
 
   constructor(private refreshTokenService: RefreshTokenService) {}
 
@@ -53,6 +55,7 @@ export class JwtService {
     )
   }
 
+
   setTimeLifeToken(time: number) {
     console.log('start TimeLifeToken')
 
@@ -63,4 +66,5 @@ export class JwtService {
       console.log('Token was deleted')
     }, time * 100)
   }
+
 }

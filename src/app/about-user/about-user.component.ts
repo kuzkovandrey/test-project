@@ -1,23 +1,29 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnDestroy, OnInit} from "@angular/core";
 import {UserService} from "../core/services/user.service";
 import {User} from "../core/models/user.model";
 import {HttpErrorResponse} from "@angular/common/http";
 import {ActivatedRoute, Router} from "@angular/router";
 import {JwtService} from "../core/services/jwt.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-about-user',
   templateUrl: './about-user.component.html',
   styleUrls: ['./about-user.component.scss']
 })
-export class AboutUserComponent implements OnInit{
+export class AboutUserComponent implements OnInit, OnDestroy{
 
   username = ''
   firstName = ''
   lastName = ''
   errorMessage = ''
 
-  constructor(private userService: UserService, private router: Router, private jwt: JwtService) {}
+  subDestroyedToken?: Subscription
+
+  constructor(private userService: UserService,
+              private router: Router,
+              private jwt: JwtService) {
+  }
 
   ngOnInit(): void {
     this.userService.getUserInfo().subscribe(
@@ -35,10 +41,14 @@ export class AboutUserComponent implements OnInit{
       }
     )
 
-    this.jwt.isDestroyedAccessToken.subscribe(() => {
-      this.router.navigate(['auth', 'login'])
+    this.subDestroyedToken = this.jwt.isDestroyedAccessToken.subscribe(() => {
+      console.log('Navigate to login')
+      this.router.navigate(['auth', 'login'], {queryParams: {unAuth: true}})
     })
+  }
 
+  ngOnDestroy() {
+    this.subDestroyedToken?.unsubscribe()
   }
 
   goToLogin() {

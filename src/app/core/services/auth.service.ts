@@ -34,7 +34,7 @@ export class AuthService {
         this.authenticated = true
         this.jwt.saveAccessToken(response.tokens.acessToken)
         this.jwt.saveRefreshToken(response.tokens.refreshToken)
-        this.jwt.setTimeLifeToken(response.tokens.exparedAt)
+        //this.jwt.setTimeLifeToken(response.tokens.exparedAt)
       })
     )
   }

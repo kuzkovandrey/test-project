@@ -1,0 +1,21 @@
+$blue: #036bfc;
+
+.header {
+  height: 10vh;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.navigation {
+  margin: .5rem 1rem;
+
+  &__link {
+    margin-right: 1rem;
+
+    &--active {
+      color: $blue;
+      font-weight: 700;
+    }
+  }
+}
