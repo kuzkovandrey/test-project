@@ -3,7 +3,7 @@ $red: #eb4934;
 $light-grey: #eeeeee;
 $white: #ffffff;
 $grey: #777777;
-$green: #00d627;
+$green: #23b000;
 
 .form {
   position: relative;
@@ -70,4 +70,20 @@ $green: #00d627;
 
 .warning-message {
   color: $red
+}
+
+.message {
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: .5rem 2rem;
+  color: $white;
+
+  &--allowed {
+    background-color: $green;
+  }
+
+  &--error {
+    background-color: $red;
+  }
 }

@@ -1,7 +1,7 @@
 <form
   class="form"
   [formGroup]="loginForm"
-  (ngSubmit)="login()"
+  (ngSubmit)="submit()"
 >
 
   <label [class.warning-message]="isInvalidUsername">
@@ -33,6 +33,7 @@
   >
 
   <button
+    #submitButton
     class="form__submit"
     type="submit"
     [disabled]="loginForm.invalid"
@@ -41,3 +42,11 @@
     Log in
   </button>
 </form>
+
+<p *ngIf="isAllowedAccess" class="message message--allowed">
+  Access is allowed. Log in, please.
+</p>
+
+<p *ngIf="errorMessage" class="message message--error">
+  {{ errorMessage }}. Try again
+</p>

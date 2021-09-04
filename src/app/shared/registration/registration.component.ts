@@ -1,5 +1,9 @@
-import {Component, DoCheck, OnInit} from '@angular/core';
+import {Component, DoCheck, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {User} from "../../core/models/user.model";
+import {AuthService} from "../../core/services/auth.service";
+import {ActivatedRoute, Router} from "@angular/router";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-registration',
@@ -8,12 +12,20 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 })
 export class RegistrationComponent implements OnInit, DoCheck{
 
+  @ViewChild('submitButton') submitButton!: ElementRef
+
   registrationForm!: FormGroup
 
   isInvalidUsername = false
   isInvalidPassword = false
   isInvalidFirstName = false
   isInvalidLastName = false
+
+  errorMessage = ''
+
+  constructor(private auth: AuthService,
+              private router: Router,
+              private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.registrationForm = new FormGroup({
@@ -57,8 +69,25 @@ export class RegistrationComponent implements OnInit, DoCheck{
     this.isInvalidLastName = !!( isTouchedLastName && isInvalidLastName);
   }
 
-  registration() {
-    console.log('reg')
+  submit() {
+    this.registration(this.registrationForm.value)
+    this.submitButton.nativeElement.disabled = true
+  }
+
+  registration(user: User) {
+    this.auth.register(user).subscribe(
+      () => {
+        console.log('access')
+        this.router.navigate(['auth', 'login', {access: true}])
+      },
+      (error: HttpErrorResponse) => {
+        console.log('reg error: registrationComponent', error)
+
+        this.errorMessage = error.error.message
+
+        setTimeout(() => this.errorMessage = '',3000)
+      }
+    )
   }
 
 }

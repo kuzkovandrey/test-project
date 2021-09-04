@@ -4,6 +4,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {LoginComponent} from "./login/login.component";
 import {RegistrationComponent} from "./registration/registration.component";
 import {CommonModule} from "@angular/common";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -12,13 +13,15 @@ import {CommonModule} from "@angular/common";
   ],
   imports: [
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    HttpClientModule
   ],
   exports: [
     LoginComponent,
     RegistrationComponent,
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    HttpClientModule
   ]
 })
 export class SharedModule {}

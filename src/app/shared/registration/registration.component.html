@@ -1,7 +1,7 @@
 <form
   class="form"
   [formGroup]="registrationForm"
-  (ngSubmit)="registration()"
+  (ngSubmit)="submit()"
 >
 
   <label [class.warning-message]="isInvalidUsername">
@@ -60,6 +60,7 @@
   >
 
   <button
+    #submitButton
     class="form__submit"
     type="submit"
     [disabled]="registrationForm.invalid"
@@ -69,3 +70,8 @@
   </button>
 
 </form>
+
+<p *ngIf="errorMessage" class="message message--error">
+  {{ errorMessage }}
+</p>
+
