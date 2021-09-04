@@ -5,6 +5,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {ActivatedRoute, Router} from "@angular/router";
 import {JwtService} from "../core/services/jwt.service";
 import {Subscription} from "rxjs";
+import {AuthService} from "../core/services/auth.service";
 
 @Component({
   selector: 'app-about-user',
@@ -22,7 +23,8 @@ export class AboutUserComponent implements OnInit, OnDestroy{
 
   constructor(private userService: UserService,
               private router: Router,
-              private jwt: JwtService) {
+              private jwt: JwtService,
+              private auth: AuthService) {
   }
 
   ngOnInit(): void {
@@ -43,6 +45,7 @@ export class AboutUserComponent implements OnInit, OnDestroy{
 
     this.subDestroyedToken = this.jwt.isDestroyedAccessToken.subscribe(() => {
       console.log('Navigate to login')
+      this.auth.authorized = false
       this.router.navigate(['auth', 'login'], {queryParams: {unAuth: true}})
     })
   }

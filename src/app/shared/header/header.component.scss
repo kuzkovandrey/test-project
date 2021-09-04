@@ -5,6 +5,11 @@ $blue: #036bfc;
   display: flex;
   justify-content: flex-end;
   align-items: center;
+
+  @media (max-width: 400px){
+    justify-content: center;
+  }
+
 }
 
 .navigation {
@@ -12,6 +17,12 @@ $blue: #036bfc;
 
   &__link {
     margin-right: 1rem;
+
+    &:last-child {
+      @media (max-width: 400px){
+        margin-right: 0;
+      }
+    }
 
     &--active {
       color: $blue;

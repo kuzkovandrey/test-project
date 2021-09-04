@@ -75,9 +75,11 @@ export class LoginComponent implements OnInit, DoCheck{
 
     this.jwt.refreshToken()
 
+    //перенести логику this.auth.authorized = true в auth service
     this.auth.login(user).pipe(delay(100)).subscribe(
-      data => {
-        console.log(data)
+      user => {
+        console.log(user)
+        this.auth.authorized = true
         this.router.navigate(['about-user'])
       },
 
