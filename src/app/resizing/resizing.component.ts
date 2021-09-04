@@ -6,5 +6,4 @@ import {Component} from "@angular/core";
   styleUrls: ['./resizing.component.scss']
 })
 export class ResizingComponent {
-
 }

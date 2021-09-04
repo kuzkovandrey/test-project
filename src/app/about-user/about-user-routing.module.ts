@@ -1,9 +1,13 @@
 import {NgModule} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
+
 import {AboutUserComponent} from "./about-user.component";
 
 const routes: Routes = [
-  {path: '', component: AboutUserComponent}
+  {
+    path: '',
+    component: AboutUserComponent
+  }
 ]
 
 @NgModule({

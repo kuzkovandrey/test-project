@@ -16,25 +16,21 @@ export class AuthService {
   constructor(private http: HttpClient,
               private jwt: JwtService) {}
 
-  isAuthenticated(): boolean {
-    return this.authenticated
-  }
-
   isAuthorized(): boolean {
     return this.authorized
   }
 
-  login(user: User) {
-    return this.http.post<any>('api/login', user)
+  login(user: User): Observable<AuthResponse> {
+    this.authorized = true
+    return this.http.post<AuthResponse>('api/login', user)
   }
 
   register(user: User): Observable<AuthResponse> {
     return this.http.post<AuthResponse>('api/register', user).pipe(
       tap(response => {
         this.authenticated = true
-        this.jwt.saveAccessToken(response.tokens.acessToken)
-        this.jwt.saveRefreshToken(response.tokens.refreshToken)
-        //this.jwt.setTimeLifeToken(response.tokens.exparedAt)
+
+        this.jwt.setAllTokens(response.tokens)
       })
     )
   }

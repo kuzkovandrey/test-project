@@ -1,7 +1,8 @@
 import {NgModule} from "@angular/core";
+import {CommonModule} from "@angular/common";
+
 import {AboutUserComponent} from "./about-user.component";
 import {AboutUserRoutingModule} from "./about-user-routing.module";
-import {CommonModule} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -12,6 +13,4 @@ import {CommonModule} from "@angular/common";
     AboutUserRoutingModule
   ]
 })
-export class AboutUserModule {
-
-}
+export class AboutUserModule {}

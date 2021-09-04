@@ -1,9 +1,11 @@
 import {Component, DoCheck, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {User} from "../../core/models/user.model";
-import {AuthService} from "../../core/services/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpErrorResponse} from "@angular/common/http";
+
+import {User} from "../../core/models/user.model";
+import {AuthService} from "../../core/services/auth.service";
+import {isInvalidInput} from "../../core/functions/is-invalid-input";
 
 @Component({
   selector: 'app-registration',
@@ -52,21 +54,13 @@ export class RegistrationComponent implements OnInit, DoCheck{
   }
 
   ngDoCheck(): void {
-    const isTouchedUsername = this.registrationForm?.get('username')?.touched
-    const isInvalidUsername = this.registrationForm?.get('username')?.invalid
-    this.isInvalidUsername = !!( isTouchedUsername && isInvalidUsername );
+    this.isInvalidUsername = isInvalidInput(this.registrationForm, 'username')
 
-    const isTouchedPassword = this.registrationForm?.get('password')?.touched
-    const isInvalidPassword = this.registrationForm?.get('password')?.invalid
-    this.isInvalidPassword = !!( isTouchedPassword && isInvalidPassword);
+    this.isInvalidPassword = isInvalidInput(this.registrationForm, 'password')
 
-    const isTouchedFirstName = this.registrationForm?.get('firstName')?.touched
-    const isInvalidFirstName  = this.registrationForm?.get('firstName')?.invalid
-    this.isInvalidFirstName = !!( isTouchedFirstName && isInvalidFirstName);
+    this.isInvalidFirstName = isInvalidInput(this.registrationForm, 'firstName')
 
-    const isTouchedLastName = this.registrationForm?.get('lastName')?.touched
-    const isInvalidLastName  = this.registrationForm?.get('lastName')?.invalid
-    this.isInvalidLastName = !!( isTouchedLastName && isInvalidLastName);
+    this.isInvalidLastName = isInvalidInput(this.registrationForm, 'lastName')
   }
 
   submit() {
@@ -90,6 +84,5 @@ export class RegistrationComponent implements OnInit, DoCheck{
       }
     )
   }
-
 }
 

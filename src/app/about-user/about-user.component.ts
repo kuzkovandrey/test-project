@@ -1,57 +1,46 @@
-import {Component, OnDestroy, OnInit} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
+import {HttpErrorResponse} from "@angular/common/http";
+import {Router} from "@angular/router";
+
 import {UserService} from "../core/services/user.service";
 import {User} from "../core/models/user.model";
-import {HttpErrorResponse} from "@angular/common/http";
-import {ActivatedRoute, Router} from "@angular/router";
-import {JwtService} from "../core/services/jwt.service";
-import {Subscription} from "rxjs";
-import {AuthService} from "../core/services/auth.service";
 
 @Component({
   selector: 'app-about-user',
   templateUrl: './about-user.component.html',
   styleUrls: ['./about-user.component.scss']
 })
-export class AboutUserComponent implements OnInit, OnDestroy{
+export class AboutUserComponent implements OnInit{
 
   username = ''
   firstName = ''
   lastName = ''
   errorMessage = ''
 
-  subDestroyedToken?: Subscription
-
   constructor(private userService: UserService,
-              private router: Router,
-              private jwt: JwtService,
-              private auth: AuthService) {
+              private router: Router) {
   }
 
   ngOnInit(): void {
     this.userService.getUserInfo().subscribe(
-      (user: User) => {
-        this.username = user.username
-        this.firstName = <string>user.firstName
-        this.lastName = <string>user.lastName
+      ({username, firstName, lastName}: User) => {
+        this.username = username
+        this.firstName = <string>firstName
+        this.lastName = <string>lastName
       },
 
       (error: HttpErrorResponse) => {
         if (error.status === 401) {
           this.errorMessage = error.error.message
+
           console.log(this.errorMessage)
+        } else {
+          this.errorMessage = `${error.status}`
+
+          console.log(this.errorMessage, error.status)
         }
       }
     )
-
-    this.subDestroyedToken = this.jwt.isDestroyedAccessToken.subscribe(() => {
-      console.log('Navigate to login')
-      this.auth.authorized = false
-      this.router.navigate(['auth', 'login'], {queryParams: {unAuth: true}})
-    })
-  }
-
-  ngOnDestroy() {
-    this.subDestroyedToken?.unsubscribe()
   }
 
   goToLogin() {

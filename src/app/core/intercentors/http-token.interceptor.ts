@@ -6,8 +6,7 @@ import {JwtService} from "../services/jwt.service";
 @Injectable()
 export class HttpTokenInterceptor implements HttpInterceptor{
 
-  constructor(private jwtService: JwtService) {
-  }
+  constructor(private jwt: JwtService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -18,20 +17,18 @@ export class HttpTokenInterceptor implements HttpInterceptor{
       'refreshToken': ''
     };
 
-    const token = this.jwtService.getAccessToken();
+    const token = this.jwt.getToken('jwtAccessToken')
 
-    if (token) {
-      headersConfig['Authorization'] = token;
-    }
+    if (token) headersConfig['Authorization'] = token;
 
     const request = req.clone({setHeaders: headersConfig});
 
     if (req.url === 'api/refresh') {
-      const refToken = this.jwtService.getRefreshToken()
+      const refToken = this.jwt.getToken('jwtRefreshToken')
 
       const request = req.clone({setParams: {refreshToken: refToken}});
 
-      console.log('[REFRESH TOKEN]', request)
+      console.log('[http-token-interceptor: REFRESH]', request)
 
       return next.handle(request)
     }

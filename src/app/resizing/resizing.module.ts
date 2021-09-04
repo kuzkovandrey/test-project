@@ -1,4 +1,5 @@
 import {NgModule} from "@angular/core";
+
 import {ResizingComponent} from "./resizing.component";
 import {ResizingRoutingModule} from "./resizing-routing.module";
 
