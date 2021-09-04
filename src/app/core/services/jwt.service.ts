@@ -1,12 +1,12 @@
 import {Injectable} from "@angular/core";
-import {BehaviorSubject, Subject} from "rxjs";
 import {RefreshTokenService} from "./refresh-token.service";
 import {AuthResponse} from "../models/auth-response.model";
+import {Subject} from "rxjs";
 
 @Injectable()
 export class JwtService {
 
-  killToken: Subject<boolean> = new Subject<boolean>()
+  isDestroyedAccessToken: Subject<boolean> = new Subject<boolean>()
 
   constructor(private refreshTokenService: RefreshTokenService) {}
 
@@ -20,7 +20,7 @@ export class JwtService {
 
   destroyAccessToken(): void {
     window.localStorage.removeItem('jwtAccessToken');
-    //this.killToken.next(true)
+    this.isDestroyedAccessToken.next(true)
   }
 
   getRefreshToken(): string {
@@ -43,6 +43,9 @@ export class JwtService {
         this.saveAccessToken(newToken.tokens.acessToken)
         this.saveRefreshToken(newToken.tokens.refreshToken)
         this.setTimeLifeToken(newToken.tokens.exparedAt)
+
+        console.log('refress access', newToken.tokens.acessToken)
+
       },
       error => {
         console.log('Error refresh token')
@@ -56,8 +59,8 @@ export class JwtService {
     setTimeout(() => {
 
       this.destroyAccessToken()
-      this.refreshToken()
 
-    }, time * 1000)
+      console.log('Token was deleted')
+    }, time * 100)
   }
 }

@@ -18,8 +18,15 @@
       <strong>Last name: </strong>
       <span>{{ lastName }}</span>
     </p>
+
+    <p *ngIf="errorMessage" class="message-error">
+      {{ errorMessage }}. Go to <a (click)="goToLogin()">login page</a>
+    </p>
+
   </div>
+
+
 
 </section>
 
-<p class="message-error"></p>
+

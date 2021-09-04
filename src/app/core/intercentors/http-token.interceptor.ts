@@ -31,6 +31,8 @@ export class HttpTokenInterceptor implements HttpInterceptor{
 
       const request = req.clone({setParams: {refreshToken: refToken}});
 
+      console.log('[REFRESH TOKEN]', request)
+
       return next.handle(request)
     }
 

@@ -4,6 +4,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {User} from "../../core/models/user.model";
 import {AuthService} from "../../core/services/auth.service";
 import {HttpErrorResponse} from "@angular/common/http";
+import {JwtService} from "../../core/services/jwt.service";
+import {forkJoin} from "rxjs";
 
 @Component({
   selector: 'app-login',
@@ -27,7 +29,8 @@ export class LoginComponent implements OnInit, DoCheck{
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private auth: AuthService) {
+              private auth: AuthService,
+              private jwt: JwtService) {
   }
 
   ngOnInit(): void {
@@ -69,6 +72,9 @@ export class LoginComponent implements OnInit, DoCheck{
   }
 
   login(user: User) {
+
+    this.jwt.refreshToken()
+
     this.auth.login(user).subscribe(
       data => {
         console.log(data)

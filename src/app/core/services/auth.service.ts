@@ -10,19 +10,18 @@ import {JwtService} from "./jwt.service";
 @Injectable()
 export class AuthService {
 
-  private authenticated = false
+  authenticated = false
+  authorized = false
 
   constructor(private http: HttpClient,
-              private jwt: JwtService) {
-
-    this.jwt.killToken.subscribe(() => {
-      this.authenticated = false
-      console.log('Token was killed')
-    })
-  }
+              private jwt: JwtService) {}
 
   isAuthenticated(): boolean {
     return this.authenticated
+  }
+
+  isAuthorized(): boolean {
+    return this.authorized
   }
 
   login(user: User) {
@@ -34,7 +33,7 @@ export class AuthService {
       tap(response => {
         this.authenticated = true
         this.jwt.saveAccessToken(response.tokens.acessToken)
-        this.jwt.saveRefreshToken(response.tokens.acessToken)
+        this.jwt.saveRefreshToken(response.tokens.refreshToken)
         this.jwt.setTimeLifeToken(response.tokens.exparedAt)
       })
     )
