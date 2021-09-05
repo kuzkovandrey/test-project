@@ -1,16 +1,21 @@
 import {
-  ChangeDetectorRef,
-  Component, DoCheck,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
   HostListener,
+  ViewChild,
 } from "@angular/core";
 
 @Component({
   selector: 'app-resize-box',
   templateUrl: './resize-box.component.html',
-  styleUrls: ['./resize-box.component.scss']
+  styleUrls: ['./resize-box.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class ResizeBoxComponent implements DoCheck{
+export class ResizeBoxComponent {
+
+  @ViewChild('box') box!: ElementRef
 
   width = 100
   height = 100
@@ -22,31 +27,24 @@ export class ResizeBoxComponent implements DoCheck{
 
   isDownMouse = false
 
-  constructor(private ref: ChangeDetectorRef) {
-    //this.ref.detach();
-  }
-
-  ngDoCheck() {
-    //console.log('check')
-  }
-
-
-  @HostListener('document:mousemove', ['$event'])
-  mouseMove(event: MouseEvent) {
+  @HostListener('pointermove', ['$event'])
+  mouseMove(event: PointerEvent) {
     if (this.isDownMouse) {
-      const newWidth = event.clientX - this.left
-      const newHeight = event.clientY - (this.top + window.innerHeight / 10)
+
+      const newWidth = event.pageX - this.left
+      const newHeight = event.pageY - this.top - window.innerHeight / 10
 
       this.width = newWidth < this.minWidth ? this.minWidth : newWidth
       this.height = newHeight < this.minHeight ? this.minHeight : newHeight
     }
   }
 
-  mouseDown() {
+  mouseDown(event: PointerEvent) {
     this.isDownMouse = true
+    this.box.nativeElement.setPointerCapture(event.pointerId)
   }
 
-  @HostListener('document:mouseup')
+  @HostListener('document:pointerup')
   mouseUp() {
     this.isDownMouse = false
   }

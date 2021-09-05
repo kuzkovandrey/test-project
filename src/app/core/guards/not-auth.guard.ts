@@ -10,7 +10,6 @@ export class NotAuthGuard implements CanActivate, CanActivateChild{
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     return this.auth.isAuthorized();
-    //return true;
   }
 
   canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {

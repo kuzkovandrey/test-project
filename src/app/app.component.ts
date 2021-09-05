@@ -1,4 +1,4 @@
-import {AfterViewChecked, AfterViewInit, Component} from '@angular/core';
+import {AfterViewChecked, AfterViewInit, Component, DoCheck} from '@angular/core';
 import {Router} from "@angular/router";
 
 import {AuthService} from "./core/services/auth.service";
@@ -9,7 +9,7 @@ import {JwtService} from "./core/services/jwt.service";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements AfterViewInit, AfterViewChecked{
+export class AppComponent implements DoCheck{
 
   constructor(private auth: AuthService,
               private jwt: JwtService,
@@ -20,7 +20,7 @@ export class AppComponent implements AfterViewInit, AfterViewChecked{
     if (token) this.auth.authorized = true;*/
   }
 
-  ngAfterViewChecked() {
+  ngDoCheck() {
     if(this.auth.authorized) {
       const token = this.jwt.getToken('jwtAccessToken')
 
