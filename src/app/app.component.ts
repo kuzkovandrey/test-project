@@ -1,18 +1,24 @@
-import {AfterViewChecked, Component} from '@angular/core';
+import {AfterViewChecked, AfterViewInit, Component} from '@angular/core';
+import {Router} from "@angular/router";
+
 import {AuthService} from "./core/services/auth.service";
 import {JwtService} from "./core/services/jwt.service";
-import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements AfterViewChecked{
+export class AppComponent implements AfterViewInit, AfterViewChecked{
 
   constructor(private auth: AuthService,
               private jwt: JwtService,
               private router: Router) {}
+
+  ngAfterViewInit() {
+    /*const token = this.jwt.getToken('jwtAccessToken')
+    if (token) this.auth.authorized = true;*/
+  }
 
   ngAfterViewChecked() {
     if(this.auth.authorized) {

@@ -1,0 +1,19 @@
+$blue: #036bfc;
+$black: #303030;
+
+.resize-box {
+  width: 100px;
+  height: 100px;
+  background-color: $blue;
+
+  &__label {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    cursor: nw-resize;
+
+    border: 10px solid transparent;
+    border-right: 10px solid $black;
+    border-bottom: 10px solid $black;
+  }
+}

@@ -1,0 +1,8 @@
+<div class="resize-box"
+  [style.width.px]="width"
+  [style.height.px]="height"
+  [style.transform]="'translate(' + left + 'px,' + top + 'px)'"
+>
+  <span (mousedown)="mouseDown()" class="resize-box__label"></span>
+
+</div>

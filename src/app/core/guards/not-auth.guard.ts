@@ -4,13 +4,13 @@ import {ActivatedRouteSnapshot, CanActivate, CanActivateChild, RouterStateSnapsh
 import {AuthService} from "../services/auth.service";
 
 @Injectable()
-export class AuthGuard implements CanActivate, CanActivateChild{
+export class NotAuthGuard implements CanActivate, CanActivateChild{
 
-  constructor(private auth: AuthService) {
-  }
+  constructor(private auth: AuthService) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     return this.auth.isAuthorized();
+    //return true;
   }
 
   canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
