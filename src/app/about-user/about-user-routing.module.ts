@@ -4,10 +4,8 @@ import {RouterModule, Routes} from "@angular/router";
 import {AboutUserComponent} from "./about-user.component";
 
 const routes: Routes = [
-  {
-    path: '',
-    component: AboutUserComponent
-  }
+  { path: '', component: AboutUserComponent},
+  {path: '**', redirectTo: ''}
 ]
 
 @NgModule({

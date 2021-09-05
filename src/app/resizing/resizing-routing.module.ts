@@ -4,7 +4,8 @@ import {RouterModule, Routes} from "@angular/router";
 import {ResizingComponent} from "./resizing.component";
 
 const routes: Routes = [
-  {path: '', component: ResizingComponent}
+  {path: '', component: ResizingComponent},
+  {path: '**', redirectTo: ''}
 ]
 
 @NgModule({

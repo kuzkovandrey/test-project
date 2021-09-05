@@ -73,6 +73,7 @@ export class LoginComponent implements OnInit, DoCheck{
 
     this.auth.login(user).pipe(delay(100)).subscribe(
       () => {
+        this.auth.authorized = true
         this.router.navigate(['about-user'])
       },
 

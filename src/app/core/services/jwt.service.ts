@@ -19,7 +19,8 @@ export class JwtService {
   }
 
   setAllTokens(tokens: TokenHandler): void {
-    this.setToken('jwtAccessToken', tokens.acessToken, {'max-age': tokens.exparedAt})
+    //this.setToken('jwtAccessToken', tokens.acessToken, {'max-age': tokens.exparedAt})
+    this.setToken('jwtAccessToken', tokens.acessToken, {'max-age': 30})
 
     this.setToken('jwtRefreshToken', tokens.refreshToken)
   }
@@ -40,11 +41,14 @@ export class JwtService {
 
         this.setAllTokens(newToken.tokens)
 
-        console.log('[jwt-service]: REFRESH: ', newToken.tokens.acessToken)
+        console.log(`new refresh token: ${this.getToken('jwtRefreshToken')}`)
+        console.log(`new access token: ${this.getToken('jwtAccessToken')}`)
 
       },
       error => {
         console.log('[jwt-service]: Error refresh token')
+        console.log(`new refresh token: ${this.getToken('jwtRefreshToken')}`)
+        console.log(`new access token: ${this.getToken('jwtAccessToken')}`)
       }
     )
   }

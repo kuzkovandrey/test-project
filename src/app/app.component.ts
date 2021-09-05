@@ -9,7 +9,7 @@ import {JwtService} from "./core/services/jwt.service";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements DoCheck{
+export class AppComponent implements AfterViewChecked{
 
   constructor(private auth: AuthService,
               private jwt: JwtService,
@@ -20,14 +20,16 @@ export class AppComponent implements DoCheck{
     if (token) this.auth.authorized = true;*/
   }
 
-  ngDoCheck() {
-    if(this.auth.authorized) {
+  ngAfterViewChecked() {
+    //if(this.auth.authorized) {
       const token = this.jwt.getToken('jwtAccessToken')
 
-      if (!token) {
+      console.log('ngAfterViewChecked appComponent')
+
+      if (!token && this.auth.authorized) {
         this.auth.authorized = false
         this.router.navigate(['auth', 'login'], {queryParams: {unAuth: true}})
       }
-    }
+    //}
   }
 }
