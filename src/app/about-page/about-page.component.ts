@@ -7,10 +7,10 @@ import {User} from "../core/models/user.model";
 
 @Component({
   selector: 'app-about-user',
-  templateUrl: './about-user.component.html',
-  styleUrls: ['./about-user.component.scss']
+  templateUrl: './about-page.component.html',
+  styleUrls: ['./about-page.component.scss']
 })
-export class AboutUserComponent implements OnInit{
+export class AboutPageComponent implements OnInit{
 
   username = ''
   firstName = ''

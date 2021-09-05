@@ -17,11 +17,11 @@ export class AppComponent implements AfterViewChecked{
 
   ngAfterViewInit() {
     /*const token = this.jwt.getToken('jwtAccessToken')
-    if (token) this.auth.authorized = true;*/
+    if (token) this.auth-page.authorized = true;*/
   }
 
   ngAfterViewChecked() {
-    //if(this.auth.authorized) {
+    //if(this.auth-page.authorized) {
       const token = this.jwt.getToken('jwtAccessToken')
 
       console.log('ngAfterViewChecked appComponent')

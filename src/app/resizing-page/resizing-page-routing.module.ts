@@ -1,10 +1,10 @@
 import {NgModule} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
 
-import {AboutUserComponent} from "./about-user.component";
+import {ResizingPageComponent} from "./resizing-page.component";
 
 const routes: Routes = [
-  { path: '', component: AboutUserComponent},
+  {path: '', component: ResizingPageComponent},
   {path: '**', redirectTo: ''}
 ]
 
@@ -12,4 +12,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AboutUserRoutingModule {}
+export class ResizingPageRoutingModule {
+}

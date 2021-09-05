@@ -6,17 +6,17 @@ const routes: Routes = [
   {
     path: 'auth',
     canActivate: [],
-    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+    loadChildren: () => import('./auth-page/auth-page.module').then(m => m.AuthPageModule)
   },
   {
-    path: 'about-user',
+    path: 'about',
     canActivate: [NotAuthGuard],
-    loadChildren: () => import('./about-user/about-user.module').then(m => m.AboutUserModule)
+    loadChildren: () => import('./about-page/about-page.module').then(m => m.AboutPageModule)
   },
   {
     path: 'resizing',
     canActivate: [NotAuthGuard],
-    loadChildren: () => import('./resizing/resizing.module').then(m => m.ResizingModule)
+    loadChildren: () => import('./resizing-page/resizing-page.module').then(m => m.ResizingPageModule)
   },
   {
     path: '', redirectTo: 'auth', pathMatch: 'full'
