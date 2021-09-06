@@ -69,11 +69,13 @@ export class LoginComponent implements OnInit, DoCheck{
 
   login(user: User) {
 
-    this.jwt.refreshToken()
-
     this.auth.login(user).pipe(delay(100)).subscribe(
-      () => {
+      (response) => {
+
+        this.jwt.setAllTokens(response.tokens)
+
         this.auth.authorized = true
+
         this.router.navigate(['about'])
       },
 

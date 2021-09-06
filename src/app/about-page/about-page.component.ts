@@ -25,7 +25,9 @@ export class AboutPageComponent implements OnInit{
     this.userService.getUserInfo().subscribe(
       ({username, firstName, lastName}: User) => {
         this.username = username
+
         this.firstName = <string>firstName
+
         this.lastName = <string>lastName
       },
 

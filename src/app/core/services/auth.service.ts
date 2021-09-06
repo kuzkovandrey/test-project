@@ -21,7 +21,6 @@ export class AuthService {
   }
 
   login(user: User): Observable<AuthResponse> {
-    //this.authorized = true
     return this.http.post<AuthResponse>('api/login', user)
   }
 

@@ -15,6 +15,9 @@ const routes: Routes = [
       },
       {
         path: '', redirectTo: 'registration'
+      },
+      {
+        path: '**', redirectTo: 'registration'
       }
     ]}
 ]
